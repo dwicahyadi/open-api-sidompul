@@ -75,9 +75,9 @@ class Sidompul
             'dompul_chip_id' => $this->chip->id,
             'msisdn' => $msisdn,
             'product_code' => $denomination,
-            'transaction_id' => $api['data']['transactionId'] ?? null,
-            'status' => $api['data']['description'] ?? null,
-            'description' => $api['data']['description'] ?? null,
+            'status' => $api['result']['errorMessage'] ?? null,
+            'transaction_id' => $api['result']['data']['transactionId'] ?? null,
+            'description' => $api['result']['data']['description'] ?? null,
             'raw' => $api,
         ]);
 
@@ -105,8 +105,8 @@ class Sidompul
             'msisdn' => $msisdn,
             'product_code' => $productCode,
             'transaction_id' => null,
-            'status' => $api['data']['description'] ?? null,
-            'description' => $api['data']['description'] ?? null,
+            'status' => $api['result']['errorMessage'] ?? null,
+            'description' => $api['result']['data']['description'] ?? null,
             'raw' => $api,
         ]);
 
