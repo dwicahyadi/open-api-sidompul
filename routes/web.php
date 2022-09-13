@@ -17,5 +17,12 @@ $router->get('/', function () use ($router) {
     return "Open API siDOMPUL by Dwi Cahyadi";
 });
 
+$router->post('/chip/register', ['as' => 'chip.register', 'uses' => 'ChipController@register']);
+$router->post('/chip/addUrl', ['as' => 'chip.addUrl', 'uses' => 'ChipController@addEndpoint']);
+
+
 $router->post('/trx', ['as' => 'trx', 'uses' => 'TrxController']);
 $router->get('/trx', ['as' => 'trx', 'uses' => 'TrxController']);
+
+$router->post('/history', ['as' => 'history', 'uses' => 'HistoryController']);
+$router->get('/history', ['as' => 'history', 'uses' => 'HistoryController']);

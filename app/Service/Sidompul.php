@@ -30,6 +30,12 @@ class Sidompul
         $this->chip->update(['pin' => $result['result']['data']]);
     }
 
+    public function checkPin(string $pin)
+    {
+        $result = $this->encrypt($pin);
+        return $this->chip->pin == $pin;
+    }
+
     public function exec(string $msisdn, string $product_code)
     {
         $w2p_denom = [
@@ -113,7 +119,7 @@ class Sidompul
         return $api;
     }
 
-    public function TransactionHistory(string $period = 'today')
+    public function transactionHistory(string $period = 'today')
     {
         $url = 'https://gateway.egw.xl.co.id/sidompul/openapi/v1/get-transaction-history';
         $headers = $this->getHeaders($url);
