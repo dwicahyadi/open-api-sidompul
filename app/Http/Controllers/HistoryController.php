@@ -16,8 +16,9 @@ class HistoryController extends Controller
         $chip = DompulChip::where('msisdn', $request['msisdnA'])->first();
 
         $sidompul = new Sidompul($chip);
+        $date = $request['start_date'] ?? date('Y-m-d');
 
-        $trx = $sidompul->transactionHistory($request['start_date'] ?? date('Y-m-d'));
+        $trx = $sidompul->transactionHistory($date);
 
         return $trx;
     }
