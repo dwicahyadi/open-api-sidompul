@@ -126,7 +126,7 @@ class Sidompul
 
         return Http::withToken($this->chip->access_token)
             ->withHeaders($headers)
-            ->get($url,['startdate'=>$start_date]);
+            ->get($url,['startdate'=>$start_date,'endate'=>$start_date]);
     }
 
     private function getToken(): void
