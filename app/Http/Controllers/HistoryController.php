@@ -17,7 +17,7 @@ class HistoryController extends Controller
 
         $sidompul = new Sidompul($chip);
 
-        $trx = $sidompul->transactionHistory($request['period'] ?? 'today');
+        $trx = $sidompul->transactionHistory($request['start_date'] ?? date('Y-m-d'));
 
         return $trx;
     }

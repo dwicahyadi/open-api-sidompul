@@ -30,9 +30,9 @@ class ChipController extends Controller
 
     public function addEndpoint(Request $request)
     {
-        if (!$request['msisdn'] || !$request['pin'] || !$request['url']  || !$request['id'] || !$request['key'])
+        if (!$request['msisdn'] || !$request['pin'] || !$request['url']  || !$request['id'] || !$request['key']
+            || !$request['apiid'] || !$request['apikey'])
             return response('Parameter tidak lengkap',404);
-
 
         $chip = DompulChip::where('msisdn', $request['msisdn'])->first();
 
