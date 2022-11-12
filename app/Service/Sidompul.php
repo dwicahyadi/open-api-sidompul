@@ -121,8 +121,9 @@ class Sidompul
 
     public function transactionHistory(string $date = '')
     {
-        $url = 'https://gateway.egw.xl.co.id/sidompul/openapi/v1/get-transaction-history?startdate='.$date;
+        $url = 'https://gateway.egw.xl.co.id/sidompul/openapi/v1/get-transaction-history';
         $headers = $this->getHeaders($url);
+        $url.="?startdate=$date";
 
         return Http::withToken($this->chip->access_token)
             ->withHeaders($headers)
