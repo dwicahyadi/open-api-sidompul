@@ -127,7 +127,7 @@ class Sidompul
 
         return Http::withToken($this->chip->access_token)
             ->withHeaders($headers)
-            ->get($url,[]);
+            ->get($url);
     }
 
     private function getToken(): void
