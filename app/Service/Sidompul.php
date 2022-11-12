@@ -121,12 +121,12 @@ class Sidompul
 
     public function transactionHistory(string $date = '')
     {
-        $url = 'https://gateway.egw.xl.co.id/sidompul/openapi/v1/get-transaction-history';
+        $url = 'https://gateway.egw.xl.co.id/sidompul/openapi/v1/get-transaction-history?startdate='.$date;
         $headers = $this->getHeaders($url);
 
         return Http::withToken($this->chip->access_token)
             ->withHeaders($headers)
-            ->get($url,['startdate'=>$date,'endate'=>$date]);
+            ->get($url);
     }
 
     private function getToken(): void
@@ -160,16 +160,20 @@ class Sidompul
         ]);
     }
 
-    private function encrypt(string $newPin): object
+    private function encrypt(string $data): object
     {
-        $result = Http::withToken($this->chip->access_token)->asJson()->post('https://gateway.egw.xl.co.id/sidompul/openapi/v1/post-encrypt',
-            ['data' => $newPin]);
+        $url = 'https://gateway.egw.xl.co.id/sidompul/openapi/v1/post-encrypt';
+        $headers = $this->getHeaders($url);
+
+        $result = Http::withToken($this->chip->access_token)->asJson()
+            ->withHeaders($headers)
+            ->post($url, ['data' => $data]);
         return $result;
     }
 
     private function getHeaders(string $url): array
     {
-        $api_guard = $this->chip->endpoints()->where('url', $url)->first();
+        $api_guard = $this->chip->endpoints()->where('url', $url)->firstOrFail();
         $headers = [
             'apiid' => $api_guard->api_id,
             'apikey' => $api_guard->api_key,

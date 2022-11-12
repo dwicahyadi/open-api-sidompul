@@ -13,13 +13,10 @@ class ChipController extends Controller
         if (!$request['msisdn'] || !$request['pin'] || !$request['id'] || !$request['secret'])
             return response('Parameter tidak lengkap',404);
 
+        $chip = DompulChip::where('msisdn', $request['msisdn'])->first();
 
-        $chip = DompulChip::create([
-            'msisdn' => $request['msisdn'],
-            'client_id' => $request['id'],
-            'client_secret' => $request['secret'],
-            'pin' => 'not set'
-        ]);
+        if (!$chip)
+            $chip = $this->createNew($request);
 
         $sidompul = new Sidompul($chip);
 
@@ -30,8 +27,7 @@ class ChipController extends Controller
 
     public function addEndpoint(Request $request)
     {
-        if (!$request['msisdn'] || !$request['pin'] || !$request['url']  || !$request['id'] || !$request['key']
-            || !$request['apiid'] || !$request['apikey'])
+        if (!$request['msisdn'] || !$request['pin'] || !$request['url']  || !$request['id'] || !$request['key'])
             return response('Parameter tidak lengkap',404);
 
         $chip = DompulChip::where('msisdn', $request['msisdn'])->first();
@@ -48,5 +44,15 @@ class ChipController extends Controller
         ]);
 
         return response('success', 201);
+    }
+
+    public function createNew(Request $request): DompulChip
+    {
+        return DompulChip::create([
+            'msisdn' => $request['msisdn'],
+            'client_id' => $request['id'],
+            'client_secret' => $request['secret'],
+            'pin' => 'not set'
+        ]);
     }
 }
